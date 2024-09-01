@@ -737,6 +737,7 @@ class MCU:
     def __init__(self, config, clocksync):
         self._config = config
         self._printer = printer = config.get_printer()
+        self.danger_options = printer.lookup_object("danger_options")
         self.gcode = printer.lookup_object("gcode")
         self._clocksync = clocksync
         self._reactor = printer.get_reactor()
@@ -1131,18 +1132,6 @@ class MCU:
         logging.info(move_msg)
         log_info = self._log_info() + "\n" + move_msg
         self._printer.set_rollover_info(self._name, log_info, log=False)
-
-    def _check_serial_exists(self):
-
-        if self._canbus_iface is not None:
-            cbid = self._printer.lookup_object("canbus_ids")
-            nodeid = cbid.get_nodeid(self._serialport)
-            return self._serial.check_canbus_connect(
-                self._serialport, nodeid, self._canbus_iface
-            )
-        else:
-            rts = self._restart_method != "cheetah"
-            return self._serial.check_connect(self._serialport, self._baud, rts)
 
     def _mcu_identify(self):
         if self.is_non_critical and not self._check_serial_exists():

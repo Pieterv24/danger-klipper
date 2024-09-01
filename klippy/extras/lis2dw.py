@@ -1,4 +1,4 @@
-# Support for reading acceleration data from an LIS2DW chip
+s# Support for reading acceleration data from an LIS2DW chip
 #
 # Copyright (C) 2023  Zhou.XianMing <zhouxm@biqu3d.com>
 # Copyright (C) 2020-2023  Kevin O'Connor <kevin@koconnor.net>
@@ -82,7 +82,7 @@ class LIS2DW:
     def check_connected(self):
         if self.mcu.non_critical_disconnected:
             raise self.printer.command_error(
-                f"LIS2DW: {self.name} could not connect cause mcu: {self.mcu.get_name()} is non_critical_disconnected!"
+                f"LIS2DW: {self.name} could not connect because mcu: {self.mcu.get_name()} is non_critical_disconnected!"
             )
 
     def read_reg(self, reg):
